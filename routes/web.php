@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
 
-Route::get('/jobs', [JobListController::class, 'index']);
-Route::get('/jobs/create', [JobListController::class, 'create']);
-Route::get('/jobs/{job}', [JobListController::class, 'show']);
-Route::post('/jobs', [JobListController::class, 'store']);
-Route::put('/jobs/{job}', [JobListController::class, 'publish']);
-Route::get('/post-jobs', [JobListController::class, 'post_jobs']);
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/jobs', [JobListController::class, 'index']);
+    Route::get('/jobs/create', [JobListController::class, 'create']);
+    Route::get('/jobs/{job}', [JobListController::class, 'show']);
+    Route::post('/jobs', [JobListController::class, 'store']);
+    Route::put('/jobs/{job}', [JobListController::class, 'publish']);
+    Route::get('/post-jobs', [JobListController::class, 'post_jobs']);
+});
 
 //Auth
 Route::get('/register', [RegisteredUserController::class, 'create']);
